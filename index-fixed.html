@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#176b45">
+  <title>Barangay Pineda | Training &amp; Seminar Management</title>
+  <style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+
+:root {
+  font-family: "Inter", sans-serif;
+  color: #26332c;
+  background: #f7f9f8;
+  font-synthesis: none;
+  --green-900: #176b45;
+  --green-700: #238354;
+  --green-500: #3fa66b;
+  --green-100: #e8f5ec;
+  --green-50: #f4faf6;
+  --surface: #ffffff;
+  --background: #f7f9f8;
+  --text: #26332c;
+  --muted: #6b756f;
+  --border: #dfe7e2;
+  --border-light: #edf1ee;
+  --warning: #e6a23c;
+  --warning-bg: #fff6e7;
+  --danger: #d9534f;
+  --danger-bg: #fdf0ef;
+  --shadow: 0 1px 2px rgba(25, 52, 37, 0.04), 0 7px 22px rgba(25, 52, 37, 0.04);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 1180px; min-height: 100vh; background: var(--background); }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: 0.5; }
+p { margin: 0; }
+.icon { flex: none; }
+.heading { color: var(--text); line-height: 1.25; }
+.heading-1 { font-size: 24px; font-weight: 650; letter-spacing: -0.02em; }
+.heading-2 { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
+.heading-3 { font-size: 15px; font-weight: 600; }
+.muted { color: var(--muted); font-size: 13px; margin-top: 6px; line-height: 1.5; }
+
+.btn { border: 1px solid transparent; border-radius: 7px; min-height: 38px; padding: 0 15px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 600; transition: background 120ms ease, border-color 120ms ease; white-space: nowrap; }
+.btn-primary { color: white; background: var(--green-900); }
+.btn-primary:hover { background: #105a39; }
+.btn-secondary { color: var(--green-900); background: white; border-color: var(--border); }
+.btn-secondary:hover { background: var(--green-50); border-color: #bad8c6; }
+.btn-ghost { color: var(--muted); background: transparent; padding: 0 8px; }
+.btn-ghost:hover { color: var(--green-900); background: var(--green-50); }
+.btn-danger { color: var(--danger); background: var(--danger-bg); border-color: #f3cfcd; }
+.danger-text { color: var(--danger); }
+
+.field { display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 600; color: #3b4740; }
+.field-wide { grid-column: 1 / -1; }
+.field-control { width: 100%; min-height: 42px; padding: 0 12px; border: 1px solid var(--border); border-radius: 7px; background: white; color: var(--text); font-size: 13px; outline: none; }
+.field-control::placeholder { color: #9ba49f; }
+.field-control:focus { border-color: var(--green-500); box-shadow: 0 0 0 3px rgba(63, 166, 107, 0.12); }
+select.field-control { padding-right: 34px; }
+.textarea { padding-top: 11px; resize: vertical; line-height: 1.5; }
+.search-box { position: relative; color: #8b9690; min-width: 230px; }
+.search-box > .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); z-index: 1; }
+.search-box .field-control { padding-left: 38px; min-height: 38px; }
+.global-search { position: relative; }
+.global-results { position: absolute; right: 0; top: calc(100% + 9px); width: 360px; padding: 7px; background: white; border: 1px solid var(--border); border-radius: 9px; box-shadow: 0 18px 45px rgba(18, 44, 29, 0.16); z-index: 20; }
+.global-result { width: 100%; min-height: 52px; justify-content: flex-start; text-align: left; padding: 7px 9px; }
+.global-result > span:nth-child(2) { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.global-result strong { color: var(--text); font-size: 11px; overflow: hidden; text-overflow: ellipsis; }
+.global-result small { color: var(--muted); font-size: 9px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
+.global-result-icon { width: 31px; height: 31px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--green-900); background: var(--green-100); }
+.global-no-results { padding: 18px 12px; color: var(--muted); font-size: 11px; text-align: center; }
+
+.card { background: var(--surface); border: 1px solid var(--border-light); border-radius: 10px; box-shadow: var(--shadow); }
+.badge { display: inline-flex; align-items: center; min-height: 25px; padding: 0 9px; border-radius: 999px; font-size: 11px; font-weight: 650; white-space: nowrap; }
+.badge-green { color: var(--green-900); background: var(--green-100); }
+.badge-amber { color: #926011; background: var(--warning-bg); }
+.badge-gray { color: #617068; background: #eef2ef; }
+.badge-red { color: #a33a37; background: var(--danger-bg); }
+
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; background: linear-gradient(145deg, #f7faf8 0%, #edf7f0 100%); position: relative; overflow: hidden; }
+.login-glow { position: absolute; border-radius: 999px; background: rgba(63, 166, 107, 0.07); }
+.login-glow-one { width: 500px; height: 500px; left: -170px; bottom: -230px; }
+.login-glow-two { width: 360px; height: 360px; right: -100px; top: -150px; }
+.login-card { width: 440px; padding: 38px 42px 34px; text-align: center; position: relative; z-index: 1; border-top: 4px solid var(--green-900); }
+.seal { width: 60px; height: 60px; border-radius: 50%; background: var(--green-100); color: var(--green-900); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; border: 1px solid #cce5d5; }
+.login-brand { font-size: 14px; font-weight: 700; color: var(--green-900); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.login-card .heading-1 { font-size: 23px; line-height: 1.35; }
+.login-subtitle { margin-top: 8px; }
+.login-form { display: grid; gap: 18px; text-align: left; margin-top: 30px; }
+.login-button { width: 100%; margin-top: 4px; min-height: 44px; letter-spacing: 0.04em; }
+.secure-note { display: flex; justify-content: center; align-items: center; gap: 7px; color: #89938e; font-size: 11px; margin-top: 22px; }
+.secure-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-500); }
+.login-footer { font-size: 12px; color: #76817b; position: absolute; bottom: 26px; }
+.login-footer span { color: var(--green-500); margin: 0 6px; }
+
+.app-shell { min-height: 100vh; display: flex; }
+.sidebar { position: fixed; inset: 0 auto 0 0; width: 244px; background: white; border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 22px 14px 16px; z-index: 10; }
+.brand { display: flex; align-items: center; gap: 11px; padding: 0 8px 23px; border-bottom: 1px solid var(--border-light); }
+.brand-mark { width: 41px; height: 41px; border-radius: 9px; color: white; background: var(--green-900); display: flex; align-items: center; justify-content: center; }
+.brand-name { font-size: 15px; font-weight: 700; color: var(--green-900); }
+.brand-subtitle { margin-top: 3px; font-size: 9px; color: var(--muted); line-height: 1.3; }
+.nav-label { color: #97a19b; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; padding: 21px 11px 8px; }
+.nav-list { display: flex; flex-direction: column; gap: 3px; }
+.nav-item { width: 100%; justify-content: flex-start; min-height: 42px; padding: 0 11px; color: #5d6962; font-weight: 500; }
+.nav-item.active { color: var(--green-900); background: var(--green-100); font-weight: 650; }
+.nav-item.active::before { content: ""; width: 3px; height: 18px; border-radius: 2px; background: var(--green-900); margin-left: -11px; }
+.nav-item.active .icon { margin-left: 0; }
+.sidebar-user { margin-top: auto; border-top: 1px solid var(--border-light); padding: 17px 5px 0; display: flex; align-items: center; gap: 10px; }
+.avatar { width: 34px; height: 34px; border-radius: 50%; color: var(--green-900); background: var(--green-100); display: flex; align-items: center; justify-content: center; }
+.avatar.small { width: 32px; height: 32px; }
+.user-copy { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.user-copy span { color: var(--muted); font-size: 9px; }
+.user-copy strong { font-size: 12px; font-weight: 600; }
+.logout-button { padding: 0; min-height: 32px; width: 32px; }
+
+.main-shell { margin-left: 244px; min-height: 100vh; width: calc(100% - 244px); }
+.topbar { height: 67px; background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; position: sticky; top: 0; z-index: 5; }
+.breadcrumb { color: #8a958f; font-size: 12px; }
+.breadcrumb span { margin: 0 8px; color: #c2cac5; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.header-actions .search-box { width: 245px; }
+.icon-button { width: 38px; padding: 0; position: relative; }
+.notification-dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--danger); top: 8px; right: 9px; border: 1px solid white; }
+.header-divider { width: 1px; height: 30px; background: var(--border); margin: 0 5px; }
+.header-profile { display: flex; align-items: center; gap: 9px; min-width: 145px; }
+.header-profile > div:last-child { display: flex; flex-direction: column; gap: 2px; }
+.header-profile strong { font-size: 11px; font-weight: 650; }
+.header-profile span { font-size: 9px; color: var(--muted); }
+.content { padding: 28px 30px 42px; max-width: 1540px; margin: 0 auto; }
+.page-intro { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 23px; min-height: 55px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 18px; }
+.stat-card { padding: 19px; display: flex; align-items: flex-start; gap: 14px; }
+.stat-icon { width: 43px; height: 43px; border-radius: 9px; color: var(--green-900); background: var(--green-100); display: flex; align-items: center; justify-content: center; }
+.stat-copy { display: flex; flex-direction: column; }
+.stat-copy > span { color: var(--muted); font-size: 12px; font-weight: 500; }
+.stat-copy strong { font-size: 27px; line-height: 1.2; margin: 3px 0; letter-spacing: -0.02em; }
+.stat-copy small { color: #8a958f; font-size: 10px; }
+.dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(310px, 0.75fr); gap: 18px; }
+.section-card { overflow: hidden; }
+.section-header { min-height: 75px; padding: 17px 19px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-light); gap: 20px; }
+.section-header .field-control { min-width: 150px; min-height: 38px; }
+
+.table-wrap { width: 100%; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 12px; }
+th { height: 43px; background: #fafcfb; color: #758079; font-size: 10px; font-weight: 650; text-align: left; text-transform: uppercase; letter-spacing: 0.035em; border-bottom: 1px solid var(--border-light); padding: 0 16px; white-space: nowrap; }
+td { height: 62px; padding: 10px 16px; border-bottom: 1px solid var(--border-light); color: #46524b; vertical-align: middle; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: #fbfdfb; }
+.empty-state { min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #98a19c; gap: 7px; }
+.empty-state strong { color: #5f6b64; font-size: 12px; }
+.empty-state span { font-size: 10px; }
+.primary-cell, .date-cell { font-weight: 600; color: var(--text); min-width: 175px; }
+.primary-cell span, .date-cell span { display: block; font-size: 10px; color: var(--muted); font-weight: 400; margin-top: 4px; }
+.date-cell { min-width: 110px; }
+.table-actions { display: flex; gap: 2px; }
+.table-actions .btn { width: 29px; height: 29px; min-height: 29px; padding: 0; }
+.table-footer { min-height: 62px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; border-top: 1px solid var(--border-light); font-size: 11px; color: var(--muted); }
+.table-footer > div { display: flex; gap: 7px; }
+.table-footer .btn { min-height: 32px; padding: 0 11px; font-size: 11px; }
+.filter-bar { min-height: 69px; padding: 14px 17px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-light); }
+.filter-bar .field-control { min-height: 38px; min-width: 160px; }
+.filter-bar .search-box { margin-right: auto; min-width: 280px; }
+
+.activity-list { padding: 4px 17px 9px; }
+.activity-item { display: grid; grid-template-columns: 35px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--border-light); }
+.activity-item:last-child { border-bottom: 0; }
+.activity-icon { width: 34px; height: 34px; border-radius: 8px; color: var(--green-900); background: var(--green-100); display: flex; align-items: center; justify-content: center; }
+.activity-item > div:nth-child(2) { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.activity-item strong { font-size: 11px; font-weight: 600; }
+.activity-item span { font-size: 9px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.activity-item time { font-size: 9px; color: #9aa39e; align-self: start; padding-top: 3px; }
+
+.form-card { max-width: 900px; margin: 0 auto; padding: 25px 28px; }
+.form-section-title { display: flex; align-items: center; gap: 12px; padding-bottom: 20px; margin-bottom: 23px; border-bottom: 1px solid var(--border-light); }
+.section-number { width: 36px; height: 36px; border-radius: 50%; background: var(--green-100); color: var(--green-900); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 22px; }
+.form-actions { display: flex; justify-content: flex-end; gap: 9px; padding-top: 23px; margin-top: 25px; border-top: 1px solid var(--border-light); }
+.person-cell { display: flex; align-items: center; gap: 10px; min-width: 145px; }
+.person-cell strong { font-weight: 600; color: var(--text); }
+.initial-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--green-100); color: var(--green-900); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+
+.modal-backdrop { position: fixed; inset: 0; background: rgba(21, 35, 27, 0.46); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 30px; }
+.modal { width: 620px; max-height: 90vh; overflow: auto; background: white; border-radius: 11px; box-shadow: 0 24px 70px rgba(18, 44, 29, 0.2); padding: 0 25px 24px; }
+.modal-wide { width: 850px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 21px 0 18px; margin-bottom: 22px; border-bottom: 1px solid var(--border-light); }
+.modal-close { font-size: 24px; font-weight: 400; width: 34px; padding: 0; }
+.modal-form { gap: 17px; }
+.detail-list { border: 1px solid var(--border-light); border-radius: 8px; overflow: hidden; }
+.detail-row { display: grid; grid-template-columns: 145px 1fr; min-height: 48px; align-items: center; padding: 0 15px; border-bottom: 1px solid var(--border-light); font-size: 12px; }
+.detail-row:last-child { border-bottom: 0; }
+.detail-row span { color: var(--muted); }
+.detail-row strong { font-weight: 600; }
+.delete-confirmation { display: flex; align-items: flex-start; gap: 14px; padding: 4px 0 8px; }
+.delete-icon { width: 44px; height: 44px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--danger); background: var(--danger-bg); }
+.delete-confirmation strong { font-size: 14px; }
+.delete-confirmation p { color: var(--muted); font-size: 11px; margin-top: 7px; line-height: 1.5; }
+
+.schedule-layout { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 18px; }
+.schedule-list { padding: 0 18px; }
+.schedule-item { min-height: 99px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border-light); }
+.schedule-item:last-child { border-bottom: 0; }
+.date-badge { width: 52px; height: 60px; border-radius: 8px; background: var(--green-900); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.date-badge strong { font-size: 21px; line-height: 1; }
+.date-badge span { font-size: 9px; letter-spacing: 0.1em; margin-top: 5px; }
+.schedule-main { flex: 1; }
+.schedule-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 9px; }
+.schedule-meta span { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 10px; }
+.schedule-summary { padding: 22px; align-self: start; text-align: center; }
+.schedule-summary .heading-2 { text-align: left; }
+.month-number { width: 82px; height: 82px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--green-100); color: var(--green-900); font-size: 32px; font-weight: 700; margin: 28px auto 8px; }
+.schedule-summary > p { color: var(--muted); font-size: 12px; margin-bottom: 26px; }
+.summary-line { display: flex; justify-content: space-between; border-top: 1px solid var(--border-light); padding: 14px 0 0; margin-top: 14px; font-size: 11px; color: var(--muted); }
+.summary-line strong { color: var(--text); }
+
+.attendance-selector { display: flex; align-items: end; gap: 30px; padding: 18px 20px; margin-bottom: 15px; }
+.attendance-selector .field { width: 390px; }
+.event-date { display: flex; flex-direction: column; gap: 8px; padding-bottom: 4px; }
+.event-date > span { font-size: 11px; font-weight: 600; color: var(--muted); }
+.event-date strong { font-size: 13px; display: flex; gap: 7px; align-items: center; }
+.mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.mini-stats .card { padding: 17px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: none; border-left: 3px solid #91a199; }
+.mini-stats .card.present { border-left-color: var(--green-500); }
+.mini-stats .card.absent { border-left-color: var(--danger); }
+.mini-stats span { color: var(--muted); font-size: 12px; }
+.mini-stats strong { font-size: 21px; }
+.attendance-progress { color: var(--green-900); background: var(--green-100); padding: 7px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+.attendance-toggle { display: flex; gap: 6px; }
+.attendance-toggle .btn { min-height: 32px; padding: 0 10px; font-size: 11px; }
+
+.certificate { background: #f3f1e9; padding: 18px; }
+.certificate-border { border: 3px double var(--green-900); min-height: 455px; text-align: center; padding: 28px 55px 25px; position: relative; background: #fffef9; }
+.certificate-border::before, .certificate-border::after { content: ""; position: absolute; width: 55px; height: 55px; border-color: var(--green-500); }
+.certificate-border::before { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
+.certificate-border::after { right: 8px; bottom: 8px; border-right: 2px solid; border-bottom: 2px solid; }
+.certificate-seal { width: 52px; height: 52px; margin: 0 auto 7px; color: var(--green-900); }
+.certificate-barangay { font-size: 15px; color: var(--green-900); font-weight: 700; letter-spacing: 0.12em; }
+.certificate-city { font-size: 9px; color: var(--muted); letter-spacing: 0.18em; margin-top: 3px; }
+.certificate-title { font-family: Georgia, serif; font-size: 34px; color: var(--green-900); letter-spacing: 0.07em; margin-top: 20px; }
+.certificate-type { color: var(--green-500); font-weight: 700; font-size: 11px; letter-spacing: 0.25em; margin-bottom: 18px; }
+.certificate-border p { font-family: Georgia, serif; font-size: 12px; color: #687169; margin: 8px 0; }
+.certificate-name { width: 60%; margin: 9px auto; padding-bottom: 5px; border-bottom: 1px solid var(--green-900); font-family: Georgia, serif; font-style: italic; font-size: 29px; color: var(--green-900); }
+.certificate-border > strong { font-family: Georgia, serif; color: var(--text); font-size: 15px; }
+.signature-row { display: flex; justify-content: space-around; margin-top: 32px; }
+.signature-row > div { display: flex; flex-direction: column; width: 180px; }
+.signature-row span { border-top: 1px solid #7c847f; padding-top: 5px; font-family: Georgia, serif; font-size: 11px; font-weight: 600; }
+.signature-row small { color: var(--muted); font-size: 8px; margin-top: 3px; }
+
+.report-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 18px; }
+.report-card { padding: 20px; }
+.report-icon { width: 44px; height: 44px; border-radius: 9px; background: var(--green-100); color: var(--green-900); display: flex; align-items: center; justify-content: center; margin-bottom: 17px; }
+.report-card p { color: var(--muted); font-size: 11px; line-height: 1.6; min-height: 36px; margin: 8px 0 13px; }
+.report-count { color: var(--green-900); font-size: 10px; font-weight: 650; padding: 8px 0 14px; border-top: 1px solid var(--border-light); }
+.report-card .btn { width: 100%; }
+.report-builder { padding: 22px; }
+.report-controls { display: grid; grid-template-columns: 1.2fr 1fr 1fr auto; gap: 12px; align-items: end; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border-light); }
+
+@media (max-width: 1250px) {
+  .content { padding-left: 22px; padding-right: 22px; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .activity-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+  .report-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React and Babel are loaded from public CDNs so the app can run from one HTML file. -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.28.4/babel.min.js"></script>
+
+  <script id="app-source" type="text/plain">
+
+  const { createElement, useState } = React;
+
+type Page =
+  | "Dashboard"
+  | "Trainings & Seminars"
+  | "Add New Training"
+  | "Participants"
+  | "Speakers"
+  | "Schedules"
+  | "Attendance"
+  | "Certificates"
+  | "Reports"
+  | "Settings";
+
+type IconName =
+  | "dashboard"
+  | "training"
+  | "participants"
+  | "speakers"
+  | "calendar"
+  | "attendance"
+  | "certificate"
+  | "reports"
+  | "settings"
+  | "search"
+  | "bell"
+  | "user"
+  | "logout"
+  | "plus"
+  | "arrow"
+  | "check"
+  | "clock"
+  | "location"
+  | "building"
+  | "trash"
+  | "edit"
+  | "eye"
+  | "download";
+
+const iconPaths: Record<IconName, ReactNode> = {
+  dashboard: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></>,
+  training: <><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" /><path d="M8 7h8M8 11h6" /></>,
+  participants: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></>,
+  speakers: <><path d="M12 6v12M8 9v6M4 11v2M16 9v6M20 11v2" /></>,
+  calendar: <><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 11h18" /></>,
+  attendance: <><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></>,
+  certificate: <><circle cx="12" cy="8" r="6" /><path d="M8.2 13.9 7 22l5-3 5 3-1.2-8.1" /><path d="m9.5 8 1.7 1.7L15 6" /></>,
+  reports: <><path d="M4 19V9M10 19V5M16 19v-7M22 19V3" /></>,
+  settings: <><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.14.36.35.7.6 1 .3.3.7.45 1.1.4h.09a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z" /></>,
+  search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></>,
+  bell: <><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></>,
+  user: <><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></>,
+  logout: <><path d="M10 17l5-5-5-5M15 12H3M21 19V5a2 2 0 0 0-2-2h-6" /></>,
+  plus: <path d="M12 5v14M5 12h14" />,
+  arrow: <path d="m9 18 6-6-6-6" />,
+  check: <path d="m5 12 4 4L19 6" />,
+  clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>,
+  location: <><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2" /></>,
+  building: <><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6M8 11h.01M12 11h.01M16 11h.01" /></>,
+  trash: <><path d="M3 6h18M8 6V4h8v2M19 6l-1 15H6L5 6M10 11v6M14 11v6" /></>,
+  edit: <><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z" /></>,
+  eye: <><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" /><circle cx="12" cy="12" r="2.5" /></>,
+  download: <><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></>,
+};
+
+function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
+  return (
+    <svg className="icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {iconPaths[name]}
+    </svg>
+  );
+}
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "secondary" | "ghost" | "danger";
+  icon?: IconName;
+};
+
+function Button({ children, variant = "primary", icon, className = "", ...props }: ButtonProps) {
+  return createElement(
+    "button",
+    { className: `btn btn-${variant} ${className}`, ...props },
+    icon ? <Icon name={icon} size={16} /> : null,
+    children,
+  );
+}
+
+function Input(props: InputHTMLAttributes<HTMLInputElement>) {
+  return createElement("input", { className: `field-control ${props.className ?? ""}`, ...props });
+}
+
+function Select({ children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
+  return createElement("select", { className: `field-control ${props.className ?? ""}`, ...props }, children);
+}
+
+function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  return createElement("textarea", { className: `field-control textarea ${props.className ?? ""}`, ...props });
+}
+
+function Heading({ children, level = 1, className = "" }: { children: ReactNode; level?: 1 | 2 | 3; className?: string }) {
+  return <div role="heading" aria-level={level} className={`heading heading-${level} ${className}`}>{children}</div>;
+}
+
+function Field({ label, children, wide = false }: { label: string; children: ReactNode; wide?: boolean }) {
+  return <label className={`field ${wide ? "field-wide" : ""}`}><span>{label}</span>{children}</label>;
+}
+
+function SearchBox({ placeholder = "Search...", value, onChange }: Pick<InputHTMLAttributes<HTMLInputElement>, "placeholder" | "value" | "onChange">) {
+  return <div className="search-box"><Icon name="search" size={17} /><Input aria-label={placeholder} placeholder={placeholder} value={value} onChange={onChange} /></div>;
+}
+
+function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <div className={`card ${className}`}>{children}</div>;
+}
+
+function Badge({ children, tone = "green" }: { children: ReactNode; tone?: "green" | "amber" | "gray" | "red" }) {
+  return <span className={`badge badge-${tone}`}>{children}</span>;
+}
+
+function ActionButtons({ onView, onEdit, onDelete }: { onView?: () => void; onEdit?: () => void; onDelete?: () => void }) {
+  return <div className="table-actions"><Button variant="ghost" title="View" aria-label="View" onClick={onView}><Icon name="eye" size={16} /></Button><Button variant="ghost" title="Edit" aria-label="Edit" onClick={onEdit}><Icon name="edit" size={16} /></Button><Button variant="ghost" className="danger-text" title="Delete" aria-label="Delete" onClick={onDelete}><Icon name="trash" size={16} /></Button></div>;
+}
+
+function DataTable({ headers, rows }: { headers: string[]; rows: ReactNode[][] }) {
+  return (
+    <div className="table-wrap">
+      <table>
+        <thead><tr>{headers.map((header) => <th key={header}>{header}</th>)}</tr></thead>
+        <tbody>{rows.length ? rows.map((row, index) => <tr key={index}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>) : <tr><td colSpan={headers.length}><div className="empty-state"><Icon name="search" size={22} /><strong>No matching records found</strong><span>Try a different search term or filter.</span></div></td></tr>}</tbody>
+      </table>
+    </div>
+  );
+}
+
+const navItems: { label: Page; icon: IconName }[] = [
+  { label: "Dashboard", icon: "dashboard" },
+  { label: "Trainings & Seminars", icon: "training" },
+  { label: "Participants", icon: "participants" },
+  { label: "Speakers", icon: "speakers" },
+  { label: "Schedules", icon: "calendar" },
+  { label: "Attendance", icon: "attendance" },
+  { label: "Certificates", icon: "certificate" },
+  { label: "Reports", icon: "reports" },
+  { label: "Settings", icon: "settings" },
+];
+
+function Login({ onLogin }: { onLogin: () => void }) {
+  return (
+    <main className="login-page">
+      <div className="login-glow login-glow-one" />
+      <div className="login-glow login-glow-two" />
+      <Card className="login-card">
+        <div className="seal"><Icon name="building" size={30} /></div>
+        <div className="login-brand">Barangay Pineda</div>
+        <Heading>Training & Seminar<br />Management System</Heading>
+        <p className="muted login-subtitle">Barangay Training and Seminar Management</p>
+        <div className="login-form">
+          <Field label="Username"><Input placeholder="Enter username" defaultValue="barangay.staff" /></Field>
+          <Field label="Password"><Input type="password" placeholder="Enter password" defaultValue="password" /></Field>
+          <Button className="login-button" onClick={onLogin}>LOGIN</Button>
+        </div>
+        <div className="secure-note"><span className="secure-dot" />Authorized personnel access only</div>
+      </Card>
+      <p className="login-footer">Barangay Pineda <span>•</span> Training Management System</p>
+    </main>
+  );
+}
+
+function Sidebar({ currentPage, setPage, onLogout }: { currentPage: Page; setPage: (page: Page) => void; onLogout: () => void }) {
+  return (
+    <aside className="sidebar">
+      <div className="brand">
+        <div className="brand-mark"><Icon name="building" size={24} /></div>
+        <div><div className="brand-name">Barangay Pineda</div><div className="brand-subtitle">Training & Seminar Management</div></div>
+      </div>
+      <div className="nav-label">MAIN MENU</div>
+      <nav className="nav-list">
+        {navItems.map((item) => {
+          const active = currentPage === item.label || (item.label === "Trainings & Seminars" && currentPage === "Add New Training");
+          return <Button key={item.label} variant="ghost" className={`nav-item ${active ? "active" : ""}`} onClick={() => setPage(item.label)}><Icon name={item.icon} size={18} /><span>{item.label}</span></Button>;
+        })}
+      </nav>
+      <div className="sidebar-user">
+        <div className="avatar"><Icon name="user" size={18} /></div>
+        <div className="user-copy"><span>Logged in as</span><strong>Barangay Staff</strong></div>
+        <Button variant="ghost" className="logout-button" onClick={onLogout} aria-label="Log out" title="Log out"><Icon name="logout" size={18} /></Button>
+      </div>
+    </aside>
+  );
+}
+
+const globalSearchItems: { label: string; description: string; page: Page; icon: IconName }[] = [
+  ...navItems.map((item) => ({ label: item.label, description: "Open system module", page: item.label, icon: item.icon })),
+  { label: "Community Health Awareness Seminar", description: "Training • October 15, 2026", page: "Trainings & Seminars", icon: "training" },
+  { label: "Livelihood Skills Training", description: "Training • October 22, 2026", page: "Trainings & Seminars", icon: "training" },
+  { label: "Maria Santos", description: "Participant • Community Health Seminar", page: "Participants", icon: "participants" },
+  { label: "Pedro Cruz", description: "Participant • Community Health Seminar", page: "Participants", icon: "participants" },
+  { label: "Juan Dela Cruz", description: "Speaker • Pineda Health Center", page: "Speakers", icon: "speakers" },
+];
+
+function Header({ page, setPage }: { page: Page; setPage: (page: Page) => void }) {
+  const [query, setQuery] = useState("");
+  const title = page === "Add New Training" ? "Trainings & Seminars" : page;
+  const results = query.trim() ? globalSearchItems.filter((item) => `${item.label} ${item.description}`.toLowerCase().includes(query.toLowerCase())).slice(0, 6) : [];
+  const openResult = (resultPage: Page) => {
+    setPage(resultPage);
+    setQuery("");
+  };
+  return (
+    <header className="topbar">
+      <div>
+        <div className="breadcrumb">Barangay Pineda <span>/</span> {title}</div>
+      </div>
+      <div className="header-actions">
+        <div className="global-search">
+          <SearchBox placeholder="Search records..." value={query} onChange={(event) => setQuery(event.target.value)} />
+          {query.trim() && <div className="global-results">
+            {results.length ? results.map((result) => <Button key={`${result.page}-${result.label}`} variant="ghost" className="global-result" onClick={() => openResult(result.page)}><span className="global-result-icon"><Icon name={result.icon} size={16} /></span><span><strong>{result.label}</strong><small>{result.description}</small></span><Icon name="arrow" size={14} /></Button>) : <div className="global-no-results">No records match “{query}”</div>}
+          </div>}
+        </div>
+        <Button variant="ghost" className="icon-button notification" aria-label="Notifications"><Icon name="bell" size={19} /><span className="notification-dot" /></Button>
+        <div className="header-divider" />
+        <div className="header-profile"><div className="avatar small"><Icon name="user" size={16} /></div><div><strong>Barangay Staff</strong><span>Administrator</span></div></div>
+      </div>
+    </header>
+  );
+}
+
+function PageIntro({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
+  return <div className="page-intro"><div><Heading>{title}</Heading>{subtitle && <p className="muted">{subtitle}</p>}</div>{action}</div>;
+}
+
+const trainingRows = [
+  ["Community Health Awareness Seminar", "Health", "Oct 15, 2026", "9:00 AM", "Juan Dela Cruz", "45", "Upcoming"],
+  ["Livelihood Skills Training", "Livelihood", "Oct 22, 2026", "1:00 PM", "Maria Santos", "32", "Upcoming"],
+  ["Waste Segregation Workshop", "Environment", "Sep 28, 2026", "8:30 AM", "Engr. Paulo Reyes", "38", "Completed"],
+  ["Women's Leadership Forum", "Women's Programs", "Nov 5, 2026", "10:00 AM", "Atty. Elena Cruz", "28", "Upcoming"],
+  ["Disaster Preparedness Seminar", "Safety", "Sep 20, 2026", "9:00 AM", "BFP Pasig", "52", "Completed"],
+];
+
+function Dashboard({ setPage }: { setPage: (page: Page) => void }) {
+  const stats: { label: string; value: string; note: string; icon: IconName }[] = [
+    { label: "Total Trainings", value: "12", note: "4 upcoming this month", icon: "training" },
+    { label: "Participants", value: "86", note: "12 newly registered", icon: "participants" },
+    { label: "Speakers", value: "4", note: "Active resource persons", icon: "speakers" },
+    { label: "Certificates", value: "72", note: "8 ready to generate", icon: "certificate" },
+  ];
+  return (
+    <>
+      <PageIntro title="Dashboard" subtitle="Overview of training and seminar activities" action={<Button icon="plus" onClick={() => setPage("Add New Training")}>Add New Training</Button>} />
+      <div className="stats-grid">
+        {stats.map((stat) => <Card className="stat-card" key={stat.label}><div className="stat-icon"><Icon name={stat.icon} size={21} /></div><div className="stat-copy"><span>{stat.label}</span><strong>{stat.value}</strong><small>{stat.note}</small></div></Card>)}
+      </div>
+      <div className="dashboard-grid">
+        <Card className="section-card upcoming-card">
+          <div className="section-header"><div><Heading level={2}>Upcoming Seminars</Heading><p className="muted">Scheduled community programs</p></div><Button variant="secondary" onClick={() => setPage("Trainings & Seminars")}>View All <Icon name="arrow" size={15} /></Button></div>
+          <DataTable headers={["Training / Seminar", "Date & Time", "Speaker", "Participants", "Status"]} rows={trainingRows.slice(0, 3).map((r) => [
+            <div className="primary-cell">{r[0]}<span>{r[1]}</span></div>,
+            <div className="date-cell">{r[2]}<span>{r[3]}</span></div>,
+            r[4],
+            <span>{r[5]} Participants</span>,
+            <Badge>{r[6]}</Badge>,
+          ])} />
+        </Card>
+        <Card className="section-card activity-card">
+          <div className="section-header"><div><Heading level={2}>Recent Activities</Heading><p className="muted">Latest system updates</p></div></div>
+          <div className="activity-list">
+            {[
+              ["participants", "New participant registered", "Maria Santos joined Health Seminar", "10 min ago"],
+              ["attendance", "Attendance updated", "Livelihood Skills Training", "1 hour ago"],
+              ["certificate", "Certificate generated", "For Pedro Cruz", "Yesterday"],
+              ["training", "New training added", "Women's Leadership Forum", "2 days ago"],
+            ].map(([icon, title, note, time]) => <div className="activity-item" key={title}><div className="activity-icon"><Icon name={icon as IconName} size={17} /></div><div><strong>{title}</strong><span>{note}</span></div><time>{time}</time></div>)}
+          </div>
+        </Card>
+      </div>
+    </>
+  );
+}
+
+function Trainings({ setPage }: { setPage: (page: Page) => void }) {
+  const [rows, setRows] = useState(() => trainingRows.map((row) => [...row]));
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("");
+  const [status, setStatus] = useState("");
+  const [viewing, setViewing] = useState<string[] | null>(null);
+  const [editing, setEditing] = useState<{ index: number; row: string[] } | null>(null);
+  const [deleting, setDeleting] = useState<{ index: number; row: string[] } | null>(null);
+  const filteredRows = rows.map((row, index) => ({ row, index })).filter(({ row }) => {
+    const matchesQuery = row.join(" ").toLowerCase().includes(query.trim().toLowerCase());
+    return matchesQuery && (!category || row[1] === category) && (!status || row[6] === status);
+  });
+  const saveEdit = () => {
+    if (!editing) return;
+    setRows((current) => current.map((row, index) => index === editing.index ? editing.row : row));
+    setEditing(null);
+  };
+  const deleteTraining = () => {
+    if (!deleting) return;
+    setRows((current) => current.filter((_, index) => index !== deleting.index));
+    setDeleting(null);
+  };
+  const updateEditField = (index: number, value: string) => setEditing((current) => current ? { ...current, row: current.row.map((field, fieldIndex) => fieldIndex === index ? value : field) } : null);
+  return (
+    <>
+      <PageIntro title="Trainings & Seminars" subtitle="Manage all barangay learning programs and activities" action={<Button icon="plus" onClick={() => setPage("Add New Training")}>Add New Training</Button>} />
+      <Card className="section-card">
+        <div className="filter-bar"><SearchBox placeholder="Search training..." value={query} onChange={(event) => setQuery(event.target.value)} /><Select aria-label="Filter by category" value={category} onChange={(event) => setCategory(event.target.value)}><option value="">All Categories</option><option>Health</option><option>Livelihood</option><option>Environment</option><option>Women's Programs</option><option>Safety</option></Select><Select aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value)}><option value="">All Statuses</option><option>Upcoming</option><option>Ongoing</option><option>Completed</option></Select></div>
+        <DataTable headers={["Training Title", "Category", "Date & Time", "Speaker", "Participants", "Status", "Actions"]} rows={filteredRows.map(({ row: r, index }) => [
+          <div className="primary-cell">{r[0]}<span>{r[1]} Program</span></div>,
+          r[1],
+          <div className="date-cell">{r[2]}<span>{r[3]}</span></div>,
+          r[4],
+          r[5],
+          <Badge tone={r[6] === "Completed" ? "gray" : "green"}>{r[6]}</Badge>,
+          <ActionButtons onView={() => setViewing(r)} onEdit={() => setEditing({ index, row: [...r] })} onDelete={() => setDeleting({ index, row: r })} />,
+        ])} />
+        <div className="table-footer"><span>Showing {filteredRows.length} of {rows.length} trainings</span><div><Button variant="secondary" disabled>Previous</Button><Button variant="secondary" disabled={filteredRows.length < 5}>Next</Button></div></div>
+      </Card>
+      {viewing && <Modal title="Training Details" subtitle="Complete program information" onClose={() => setViewing(null)}>
+        <div className="detail-list">
+          {[["Training Title", viewing[0]], ["Category", viewing[1]], ["Date", viewing[2]], ["Time", viewing[3]], ["Speaker", viewing[4]], ["Participants", `${viewing[5]} registered`], ["Status", viewing[6]]].map(([label, value]) => <div className="detail-row" key={label}><span>{label}</span><strong>{value}</strong></div>)}
+        </div>
+        <div className="form-actions"><Button variant="secondary" onClick={() => setViewing(null)}>Close</Button><Button icon="edit" onClick={() => { const index = rows.indexOf(viewing); setEditing({ index, row: [...viewing] }); setViewing(null); }}>Edit Training</Button></div>
+      </Modal>}
+      {editing && <Modal title="Edit Training" subtitle="Update the selected program" onClose={() => setEditing(null)}>
+        <div className="form-grid modal-form">
+          <Field label="Training Title" wide><Input value={editing.row[0]} onChange={(event) => updateEditField(0, event.target.value)} /></Field>
+          <Field label="Category"><Select value={editing.row[1]} onChange={(event) => updateEditField(1, event.target.value)}><option>Health</option><option>Livelihood</option><option>Environment</option><option>Women's Programs</option><option>Safety</option></Select></Field>
+          <Field label="Status"><Select value={editing.row[6]} onChange={(event) => updateEditField(6, event.target.value)}><option>Upcoming</option><option>Ongoing</option><option>Completed</option></Select></Field>
+          <Field label="Date"><Input value={editing.row[2]} onChange={(event) => updateEditField(2, event.target.value)} /></Field>
+          <Field label="Time"><Input value={editing.row[3]} onChange={(event) => updateEditField(3, event.target.value)} /></Field>
+          <Field label="Speaker"><Input value={editing.row[4]} onChange={(event) => updateEditField(4, event.target.value)} /></Field>
+          <Field label="Participants"><Input type="number" value={editing.row[5]} onChange={(event) => updateEditField(5, event.target.value)} /></Field>
+        </div>
+        <div className="form-actions"><Button variant="secondary" onClick={() => setEditing(null)}>Cancel</Button><Button icon="check" onClick={saveEdit}>Save Changes</Button></div>
+      </Modal>}
+      {deleting && <Modal title="Delete Training" subtitle="This action cannot be undone" onClose={() => setDeleting(null)}>
+        <div className="delete-confirmation"><div className="delete-icon"><Icon name="trash" size={22} /></div><div><strong>Delete “{deleting.row[0]}”?</strong><p>This training and its schedule will be removed from the list.</p></div></div>
+        <div className="form-actions"><Button variant="secondary" onClick={() => setDeleting(null)}>Cancel</Button><Button variant="danger" icon="trash" onClick={deleteTraining}>Delete Training</Button></div>
+      </Modal>}
+    </>
+  );
+}
+
+function AddTraining({ setPage }: { setPage: (page: Page) => void }) {
+  return (
+    <>
+      <PageIntro title="Add New Training" subtitle="Create a new community training or seminar" />
+      <Card className="form-card">
+        <div className="form-section-title"><div className="section-number">1</div><div><Heading level={2}>Training Information</Heading><p className="muted">Enter the program's basic details</p></div></div>
+        <div className="form-grid">
+          <Field label="Training Title" wide><Input placeholder="Enter training or seminar title" /></Field>
+          <Field label="Description" wide><Textarea placeholder="Provide a brief description of the program" rows={4} /></Field>
+          <Field label="Category"><Select defaultValue=""><option value="" disabled>Select category</option><option>Health</option><option>Livelihood</option><option>Environment</option><option>Women's Programs</option></Select></Field>
+          <Field label="Speaker"><Select defaultValue=""><option value="" disabled>Select speaker</option><option>Juan Dela Cruz</option><option>Maria Santos</option><option>Engr. Paulo Reyes</option></Select></Field>
+          <Field label="Date"><Input type="date" /></Field>
+          <Field label="Time"><Input type="time" /></Field>
+          <Field label="Maximum Participants"><Input type="number" placeholder="e.g. 50" /></Field>
+          <Field label="Location"><Input placeholder="e.g. Barangay Multi-Purpose Hall" /></Field>
+        </div>
+        <div className="form-actions"><Button variant="secondary" onClick={() => setPage("Trainings & Seminars")}>Cancel</Button><Button icon="check" onClick={() => setPage("Trainings & Seminars")}>Save Training</Button></div>
+      </Card>
+    </>
+  );
+}
+
+function Participants() {
+  const [query, setQuery] = useState("");
+  const rows = [
+    ["Maria Santos", "09XX XXX 0142", "Community Health Seminar", "October 5, 2026", "Registered"],
+    ["Pedro Cruz", "09XX XXX 8831", "Community Health Seminar", "October 6, 2026", "Attended"],
+    ["Ana Reyes", "09XX XXX 4520", "Livelihood Skills Training", "October 6, 2026", "Registered"],
+    ["Roberto Garcia", "09XX XXX 7344", "Waste Segregation Workshop", "September 18, 2026", "Attended"],
+    ["Liza Mendoza", "09XX XXX 2309", "Women's Leadership Forum", "October 8, 2026", "Registered"],
+  ];
+  const filteredRows = rows.filter((row) => row.join(" ").toLowerCase().includes(query.trim().toLowerCase()));
+  return (
+    <>
+      <PageIntro title="Participants" subtitle="Register and manage community participants" action={<Button icon="plus">Add Participant</Button>} />
+      <Card className="section-card">
+        <div className="filter-bar"><SearchBox placeholder="Search participant..." value={query} onChange={(event) => setQuery(event.target.value)} /><Select defaultValue=""><option value="">All Trainings</option><option>Community Health Seminar</option><option>Livelihood Skills Training</option></Select></div>
+        <DataTable headers={["Participant Name", "Contact Number", "Training / Seminar", "Registration Date", "Status", "Actions"]} rows={filteredRows.map((r) => [
+          <div className="person-cell"><div className="initial-avatar">{r[0].split(" ").map((n) => n[0]).join("")}</div><strong>{r[0]}</strong></div>, r[1], r[2], r[3], <Badge tone={r[4] === "Attended" ? "green" : "amber"}>{r[4]}</Badge>, <ActionButtons />,
+        ])} />
+        <div className="table-footer"><span>Showing {filteredRows.length} matching participants</span><div><Button variant="secondary" disabled>Previous</Button><Button variant="secondary" disabled>Next</Button></div></div>
+      </Card>
+    </>
+  );
+}
+
+function Speakers() {
+  const [showForm, setShowForm] = useState(false);
+  const [query, setQuery] = useState("");
+  const rows = [
+    ["Juan Dela Cruz", "Pineda Health Center", "09XX XXX 1201", "Community Health Awareness", "Oct 15, 9:00 AM"],
+    ["Maria Santos", "TESDA Pasig", "09XX XXX 3481", "Livelihood Skills Training", "Oct 22, 1:00 PM"],
+    ["Engr. Paulo Reyes", "Pasig CENRO", "09XX XXX 8950", "Waste Segregation Workshop", "Sep 28, 8:30 AM"],
+    ["Atty. Elena Cruz", "Gabriela Pasig", "09XX XXX 6632", "Women's Leadership Forum", "Nov 5, 10:00 AM"],
+  ];
+  const filteredRows = rows.filter((row) => row.join(" ").toLowerCase().includes(query.trim().toLowerCase()));
+  return (
+    <>
+      <PageIntro title="Speakers" subtitle="Manage program speakers and resource persons" action={<Button icon="plus" onClick={() => setShowForm(true)}>Add Speaker</Button>} />
+      <Card className="section-card">
+        <div className="filter-bar"><SearchBox placeholder="Search speaker..." value={query} onChange={(event) => setQuery(event.target.value)} /></div>
+        <DataTable headers={["Speaker Name", "Organization", "Contact", "Assigned Training", "Schedule", "Actions"]} rows={filteredRows.map((r) => [<div className="person-cell"><div className="initial-avatar">{r[0].split(" ").map((n) => n[0]).join("")}</div><strong>{r[0]}</strong></div>, r[1], r[2], r[3], r[4], <ActionButtons />])} />
+      </Card>
+      {showForm && <Modal title="Add Speaker" subtitle="Add a new resource person" onClose={() => setShowForm(false)}>
+        <div className="form-grid modal-form">
+          <Field label="Full Name" wide><Input placeholder="Enter full name" /></Field>
+          <Field label="Organization"><Input placeholder="Organization or agency" /></Field>
+          <Field label="Contact Number"><Input placeholder="09XX XXX XXXX" /></Field>
+          <Field label="Email"><Input type="email" placeholder="name@example.com" /></Field>
+          <Field label="Specialization"><Input placeholder="e.g. Community Health" /></Field>
+        </div>
+        <div className="form-actions"><Button variant="secondary" onClick={() => setShowForm(false)}>Cancel</Button><Button onClick={() => setShowForm(false)}>Save Speaker</Button></div>
+      </Modal>}
+    </>
+  );
+}
+
+function Schedules() {
+  const schedules = [
+    { day: "15", month: "OCT", title: "Community Health Awareness Seminar", time: "9:00 AM – 12:00 PM", location: "Barangay Multi-Purpose Hall", speaker: "Juan Dela Cruz", status: "Upcoming" },
+    { day: "22", month: "OCT", title: "Livelihood Skills Training", time: "1:00 PM – 4:30 PM", location: "Barangay Training Room", speaker: "Maria Santos", status: "Upcoming" },
+    { day: "05", month: "NOV", title: "Women's Leadership Forum", time: "10:00 AM – 3:00 PM", location: "Barangay Multi-Purpose Hall", speaker: "Atty. Elena Cruz", status: "Upcoming" },
+    { day: "12", month: "NOV", title: "Community Disaster Preparedness", time: "8:30 AM – 11:30 AM", location: "Pineda Covered Court", speaker: "BFP Pasig", status: "Upcoming" },
+  ];
+  return (
+    <>
+      <PageIntro title="Schedules" subtitle="View upcoming barangay trainings and seminar schedules" action={<Button icon="plus">Add Schedule</Button>} />
+      <div className="schedule-layout">
+        <Card className="section-card schedule-card">
+          <div className="section-header"><div><Heading level={2}>Upcoming Schedule</Heading><p className="muted">October – November 2026</p></div><Select aria-label="Select month"><option>October 2026</option><option>November 2026</option></Select></div>
+          <div className="schedule-list">
+            {schedules.map((item) => <div className="schedule-item" key={item.title}>
+              <div className="date-badge"><strong>{item.day}</strong><span>{item.month}</span></div>
+              <div className="schedule-main"><Heading level={3}>{item.title}</Heading><div className="schedule-meta"><span><Icon name="clock" size={15} />{item.time}</span><span><Icon name="location" size={15} />{item.location}</span><span><Icon name="speakers" size={15} />{item.speaker}</span></div></div>
+              <Badge>{item.status}</Badge><Button variant="ghost" aria-label="View details"><Icon name="arrow" size={17} /></Button>
+            </div>)}
+          </div>
+        </Card>
+        <Card className="schedule-summary">
+          <Heading level={2}>This Month</Heading>
+          <div className="month-number">3</div><p>scheduled programs</p>
+          <div className="summary-line"><span>Expected participants</span><strong>105</strong></div>
+          <div className="summary-line"><span>Venues in use</span><strong>2</strong></div>
+        </Card>
+      </div>
+    </>
+  );
+}
+
+function Attendance() {
+  const [attendance, setAttendance] = useState<Record<string, boolean>>({ "Maria Santos": true, "Pedro Cruz": true, "Ana Reyes": false, "Roberto Garcia": true, "Liza Mendoza": true });
+  const names = Object.keys(attendance);
+  return (
+    <>
+      <PageIntro title="Attendance" subtitle="Record participant attendance for scheduled programs" />
+      <Card className="attendance-selector"><Field label="Select Training / Seminar"><Select><option>Community Health Awareness Seminar</option><option>Livelihood Skills Training</option></Select></Field><div className="event-date"><span>Training Date</span><strong><Icon name="calendar" size={17} />October 15, 2026</strong></div></Card>
+      <div className="mini-stats">
+        <Card><span>Registered</span><strong>45</strong></Card><Card className="present"><span>Present</span><strong>38</strong></Card><Card className="absent"><span>Absent</span><strong>7</strong></Card>
+      </div>
+      <Card className="section-card">
+        <div className="section-header"><div><Heading level={2}>Participant Attendance</Heading><p className="muted">Mark each participant as present or absent</p></div><span className="attendance-progress">38 of 45 marked present</span></div>
+        <DataTable headers={["Participant", "Contact", "Registration Status", "Attendance"]} rows={names.map((name, index) => [
+          <div className="person-cell"><div className="initial-avatar">{name.split(" ").map((n) => n[0]).join("")}</div><strong>{name}</strong></div>,
+          `09XX XXX ${["0142", "8831", "4520", "7344", "2309"][index]}`,
+          <Badge tone="gray">Registered</Badge>,
+          <div className="attendance-toggle"><Button variant={attendance[name] ? "primary" : "secondary"} onClick={() => setAttendance((a) => ({ ...a, [name]: true }))}><Icon name="check" size={15} />Present</Button><Button variant={!attendance[name] ? "danger" : "secondary"} onClick={() => setAttendance((a) => ({ ...a, [name]: false }))}>Absent</Button></div>,
+        ])} />
+        <div className="form-actions"><Button icon="check">Save Attendance</Button></div>
+      </Card>
+    </>
+  );
+}
+
+function Modal({ title, subtitle, children, onClose, wide = false }: { title: string; subtitle?: string; children: ReactNode; onClose: () => void; wide?: boolean }) {
+  return <div className="modal-backdrop" role="presentation" onMouseDown={onClose}><div className={`modal ${wide ? "modal-wide" : ""}`} role="dialog" aria-modal="true" aria-label={title} onMouseDown={(event) => event.stopPropagation()}><div className="modal-header"><div><Heading level={2}>{title}</Heading>{subtitle && <p className="muted">{subtitle}</p>}</div><Button variant="ghost" className="modal-close" onClick={onClose} aria-label="Close">×</Button></div>{children}</div></div>;
+}
+
+function Certificates() {
+  const [preview, setPreview] = useState(false);
+  const [query, setQuery] = useState("");
+  const rows = [
+    ["Maria Santos", "Community Health Awareness Seminar", "Present", "Ready"],
+    ["Pedro Cruz", "Community Health Awareness Seminar", "Present", "Ready"],
+    ["Roberto Garcia", "Waste Segregation Workshop", "Present", "Generated"],
+    ["Ana Reyes", "Livelihood Skills Training", "Pending", "Not Available"],
+  ];
+  const filteredRows = rows.filter((row) => row.join(" ").toLowerCase().includes(query.trim().toLowerCase()));
+  return (
+    <>
+      <PageIntro title="Certificates" subtitle="Generate certificates for eligible participants" />
+      <Card className="section-card">
+        <div className="filter-bar"><SearchBox placeholder="Search participant..." value={query} onChange={(event) => setQuery(event.target.value)} /><Select defaultValue=""><option value="">All Trainings</option><option>Community Health Seminar</option></Select><Select defaultValue=""><option value="">All Certificate Statuses</option><option>Ready</option><option>Generated</option></Select></div>
+        <DataTable headers={["Participant", "Training / Seminar", "Attendance", "Certificate Status", "Action"]} rows={filteredRows.map((r) => [
+          <div className="person-cell"><div className="initial-avatar">{r[0].split(" ").map((n) => n[0]).join("")}</div><strong>{r[0]}</strong></div>, r[1], <Badge tone={r[2] === "Present" ? "green" : "amber"}>{r[2]}</Badge>, <Badge tone={r[3] === "Ready" ? "green" : r[3] === "Generated" ? "gray" : "amber"}>{r[3]}</Badge>,
+          r[3] === "Ready" ? <Button variant="secondary" icon="certificate" onClick={() => setPreview(true)}>Generate Certificate</Button> : r[3] === "Generated" ? <Button variant="ghost" icon="download">Download</Button> : <span className="muted">Attendance required</span>,
+        ])} />
+      </Card>
+      {preview && <Modal title="Certificate Preview" subtitle="Review before generating" onClose={() => setPreview(false)} wide>
+        <div className="certificate">
+          <div className="certificate-border">
+            <div className="certificate-seal"><Icon name="building" size={31} /></div>
+            <div className="certificate-barangay">BARANGAY PINEDA</div>
+            <div className="certificate-city">CITY OF PASIG</div>
+            <div className="certificate-title">CERTIFICATE</div>
+            <div className="certificate-type">OF PARTICIPATION</div>
+            <p>This certificate is proudly presented to</p>
+            <div className="certificate-name">Maria Santos</div>
+            <p>for actively participating in the</p>
+            <strong>Community Health Awareness Seminar</strong>
+            <p>held on October 15, 2026 at the Barangay Pineda Multi-Purpose Hall.</p>
+            <div className="signature-row"><div><span>Juan Dela Cruz</span><small>Resource Speaker</small></div><div><span>Hon. Ramon P. Villanueva</span><small>Punong Barangay</small></div></div>
+          </div>
+        </div>
+        <div className="form-actions"><Button variant="secondary" onClick={() => setPreview(false)}>Close Preview</Button><Button icon="download" onClick={() => setPreview(false)}>Generate Certificate</Button></div>
+      </Modal>}
+    </>
+  );
+}
+
+function Reports() {
+  const reports: { title: string; text: string; icon: IconName; count: string }[] = [
+    { title: "Participant Report", text: "View and generate registered participant lists.", icon: "participants", count: "86 records" },
+    { title: "Attendance Report", text: "View attendance summaries by training program.", icon: "attendance", count: "78% average" },
+    { title: "Training Report", text: "Review completed and upcoming training activities.", icon: "training", count: "12 programs" },
+    { title: "Certificate Report", text: "View and track all generated certificates.", icon: "certificate", count: "72 generated" },
+  ];
+  return (
+    <>
+      <PageIntro title="Reports" subtitle="View, generate, and export barangay training records" action={<Button icon="download">Generate Report</Button>} />
+      <div className="report-grid">{reports.map((report) => <Card className="report-card" key={report.title}><div className="report-icon"><Icon name={report.icon} size={23} /></div><Heading level={2}>{report.title}</Heading><p>{report.text}</p><div className="report-count">{report.count}</div><Button variant="secondary">View Report <Icon name="arrow" size={15} /></Button></Card>)}</div>
+      <Card className="section-card report-builder"><div><Heading level={2}>Quick Report Generator</Heading><p className="muted">Select a report type and date range to export records.</p></div><div className="report-controls"><Field label="Report Type"><Select><option>Participant Report</option><option>Attendance Report</option><option>Training Report</option><option>Certificate Report</option></Select></Field><Field label="Date Range"><Select><option>Current Month</option><option>Last 3 Months</option><option>This Year</option></Select></Field><Field label="Format"><Select><option>PDF Document</option><option>Excel Spreadsheet</option></Select></Field><Button icon="download">Generate</Button></div></Card>
+    </>
+  );
+}
+
+function Settings() {
+  return <><PageIntro title="Settings" subtitle="Manage system and barangay office information" /><Card className="form-card"><div className="form-section-title"><div className="section-number"><Icon name="building" size={18} /></div><div><Heading level={2}>Barangay Information</Heading><p className="muted">Details shown in reports and certificates</p></div></div><div className="form-grid"><Field label="Barangay Name"><Input defaultValue="Barangay Pineda" /></Field><Field label="City / Municipality"><Input defaultValue="City of Pasig" /></Field><Field label="Office Contact"><Input defaultValue="(02) 8XXX-XXXX" /></Field><Field label="Official Email"><Input defaultValue="barangaypineda@example.gov.ph" /></Field><Field label="Office Address" wide><Input defaultValue="Barangay Pineda Hall, Pineda, Pasig City" /></Field></div><div className="form-actions"><Button icon="check">Save Changes</Button></div></Card></>;
+}
+
+function AppContent({ page, setPage }: { page: Page; setPage: (page: Page) => void }) {
+  if (page === "Dashboard") return <Dashboard setPage={setPage} />;
+  if (page === "Trainings & Seminars") return <Trainings setPage={setPage} />;
+  if (page === "Add New Training") return <AddTraining setPage={setPage} />;
+  if (page === "Participants") return <Participants />;
+  if (page === "Speakers") return <Speakers />;
+  if (page === "Schedules") return <Schedules />;
+  if (page === "Attendance") return <Attendance />;
+  if (page === "Certificates") return <Certificates />;
+  if (page === "Reports") return <Reports />;
+  return <Settings />;
+}
+
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [page, setPage] = useState<Page>("Dashboard");
+  if (!loggedIn) return <Login onLogin={() => setLoggedIn(true)} />;
+  return (
+    <div className="app-shell">
+      <Sidebar currentPage={page} setPage={setPage} onLogout={() => setLoggedIn(false)} />
+      <div className="main-shell">
+        <Header page={page} setPage={setPage} />
+        <main className="content"><AppContent page={page} setPage={setPage} /></main>
+      </div>
+    </div>
+  );
+}
+</script>
+  <script>
+    window.addEventListener("load", function () {
+      try {
+        const source = document.getElementById("app-source").textContent;
+        const compiled = Babel.transform(source, {
+          filename: "app.tsx",
+          presets: [
+            ["typescript", { allExtensions: true, isTSX: true }],
+            ["react", { runtime: "classic" }]
+          ]
+        }).code;
+        const startApp = new Function("React", "ReactDOM", compiled + `
+          const root = ReactDOM.createRoot(document.getElementById("root"));
+          root.render(React.createElement(App));
+        `);
+        startApp(React, ReactDOM);
+      } catch (error) {
+        console.error("App startup error:", error);
+        document.getElementById("root").innerHTML =
+          '<div style="font-family:Arial;padding:24px;color:#a11"><h2>App could not start</h2><p>Open Chrome Console and send the red error message.</p></div>';
+      }
+    });
+  </script>
+</body>
+</html>
